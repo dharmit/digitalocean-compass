@@ -10,6 +10,7 @@ ADD run-httpd.sh /run-httpd.sh
 
 RUN sudo chmod -v +x /run-httpd.sh
 
+EXPOSE 80
 COPY index.html /var/www/html/
 
 CMD ["/run-httpd.sh"]

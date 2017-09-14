@@ -1,16 +1,17 @@
 FROM registry.centos.org/dharmit/base
 
-MAINTAINER Dharmit Shah <dshah@redhat.com>
+MAINTAINER Dharmit Shah <shahdharmit@gmail.com>
+
+ENV FLASK_APP=hello.py
 
 RUN sudo yum -y update && \
-    sudo yum -y install httpd && \
-    sudo yum clean all
+    sudo yum -y install epel-release && \
+    sudo yum -y install python-pip && \
+    sudo yum clean all && \
+    sudo pip install flask
 
-ADD run-httpd.sh /run-httpd.sh
+ADD hello.py /hello.py
 
-RUN sudo chmod -v +x /run-httpd.sh
+EXPOSE 5000
 
-EXPOSE 80
-COPY index.html /var/www/html/
-
-CMD ["/run-httpd.sh"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
